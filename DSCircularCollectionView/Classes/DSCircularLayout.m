@@ -46,12 +46,16 @@
     }
 }
 
+
 -(void)prepareLayout{
     [super prepareLayout];
-    cellCount = [self.collectionView numberOfItemsInSection:0];
-    circumference = ABS(_startAngle - _endAngle)*_radius;
-    maxNoOfCellsInCircle =  circumference/(MAX(_itemSize.width, _itemSize.height) + _angularSpacing/2);
-    angleOfEachItem = ABS(_startAngle - _endAngle)/maxNoOfCellsInCircle;
+	if ([[self collectionView] numberOfSections] > 0) {
+		cellCount = [self.collectionView numberOfItemsInSection:0];
+		circumference = ABS(_startAngle - _endAngle)*_radius;
+		maxNoOfCellsInCircle = cellCount;
+//		maxNoOfCellsInCircle =  circumference/(MAX(_itemSize.width, _itemSize.height) + _angularSpacing/2);
+		angleOfEachItem = ABS(_startAngle - _endAngle)/maxNoOfCellsInCircle;
+	}
 }
 
 -(CGSize)collectionViewContentSize{
@@ -87,7 +91,6 @@
     attributes.size = _itemSize;
     int mirrorX = _mirrorX ? -1 : 1;
     int mirrorY = _mirrorY ? -1 : 1;
-    
     CGFloat x = _centre.x + offset + mirrorX*(_radius*cosf(indexPath.item*angleOfEachItem - offsetAngle + angleOfEachItem/2 - _startAngle));
     CGFloat y = _centre.y + mirrorY*(_radius*sinf(indexPath.item*angleOfEachItem - offsetAngle + angleOfEachItem/2 - _startAngle));
     
@@ -101,11 +104,7 @@
     attributes.center = CGPointMake(x, y);
     attributes.zIndex = cellCount - indexPath.item;
     if(_rotateItems){
-        if(_mirrorY){
-            attributes.transform = CGAffineTransformMakeRotation(M_PI - cellCurrentAngle - M_PI/2);
-        }else{
-            attributes.transform = CGAffineTransformMakeRotation(cellCurrentAngle - M_PI/2);
-        }
+        attributes.transform = CGAffineTransformMakeRotation(cellCurrentAngle - M_PI/2);
     }
     return attributes;
 }
@@ -122,12 +121,10 @@
     attributes.size = _itemSize;
     int mirrorX = _mirrorX ? -1 : 1;
     int mirrorY = _mirrorY ? -1 : 1;
-    
     CGFloat x = _centre.x + mirrorX*(_radius*cosf(indexPath.item*angleOfEachItem - offsetAngle + angleOfEachItem/2 - _startAngle));
     CGFloat y = _centre.y + offset + mirrorY*(_radius*sinf(indexPath.item*angleOfEachItem - offsetAngle + angleOfEachItem/2 - _startAngle));
     
     CGFloat cellCurrentAngle = indexPath.item*angleOfEachItem + angleOfEachItem/2 - offsetAngle;
-    
     if(cellCurrentAngle >= -angleOfEachItem/2 && cellCurrentAngle <= ABS(_startAngle - _endAngle) + angleOfEachItem/2){
         attributes.alpha = 1;
     }else{
@@ -137,11 +134,7 @@
     attributes.center = CGPointMake(x, y);
     attributes.zIndex = cellCount - indexPath.item;
     if(_rotateItems){
-        if(_mirrorX){
-            attributes.transform = CGAffineTransformMakeRotation(2*M_PI - cellCurrentAngle);
-        }else{
-            attributes.transform = CGAffineTransformMakeRotation(cellCurrentAngle);
-        }
+        attributes.transform = CGAffineTransformMakeRotation(cellCurrentAngle - M_PI/2);
     }
     
     return attributes;

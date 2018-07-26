@@ -8,13 +8,13 @@
 
 Pod::Spec.new do |s|
   s.name             = 'DSCircularCollectionView'
-  s.version          = '1.0.3'
+  s.version          = '2.1'
   s.summary          = 'Sub class of UICollectionViewLayout for circular collection view'
   s.homepage         = 'https://github.com/DoddaSrinivasan/DSCircularCollectionView'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'Dodda Srinivasan' => 'srinivasan.munna@gmail.com' }
-  s.source           = { :git => 'https://github.com/DoddaSrinivasan/DSCircularCollectionView.git', :tag => s.version.to_s }
+  s.source           = { :git => 'https://github.com/harishsaini/DSCircularCollectionView.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.ios.deployment_target = '8.0'
